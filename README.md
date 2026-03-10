@@ -1,34 +1,14 @@
-<p align="center">
-<a href="https://www.appsmith.com?utm_source=github&utm_medium=organic&utm_campaign=readme">
-  <img src="static/appsmith_logo_white.png" alt="Appsmith Logo" width="350">
-</a>
-</p>
+# Protoforge
 
-<p align="center">
-<a href="https://discord.gg/rBTTVJp">
-<img alt="Discord" src="https://img.shields.io/discord/725602949748752515?color=5865F2&label=Discord&style=for-the-badge" />
-</a>
+is a decommercialized version of Appsmith.
 
-<a href="https://github.com/appsmithorg/appsmith/releases">
-<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/appsmithorg/appsmith?color=00FF0&style=for-the-badge">
-</a>
-<a href="https://docs.appsmith.com/getting-started/setup/installation-guides/docker?utm_source=github&utm_medium=organic&utm_campaign=readme&utm_content=badge">
-<img src="https://img.shields.io/docker/pulls/appsmith/appsmith-ce?color=4591df&style=for-the-badge">
-</a>
-<a href="https://www.youtube.com/@appsmith/?sub_confirmation=1" target="_blank">
-    <img alt="YouTube Channel Subscribers" src="https://img.shields.io/youtube/channel/subscribers/UCMYwzPG2txS8nR5ZbNY6T5g?color=00FF0&style=for-the-badge">
-</a>
-<a href="https://www.youtube.com/@appsmith/?sub_confirmation=1" target="_blank">
-    <img alt="YouTube Channel Views" src="https://img.shields.io/youtube/channel/views/UCMYwzPG2txS8nR5ZbNY6T5g?color=00FF0&style=for-the-badge">
-</a>
-</p>
+Features:
 
----
+* Everything in Appsmith Community Edition
+* OIDC support beyond Google/Github
+* Remove all upsell widgets
 
-Organizations build custom applications like dashboards, admin panels, customer 360, IT automation, and service management tools to help their teams work more efficiently and effectively. Appsmith is an open-source low-code platform that streamlines custom application development, deployment, and maintenance. Learn more on our [website](https://www.appsmith.com?utm_source=github&utm_medium=organic&utm_campaign=readme).
-  
-[![Appsmith in 100 secs](/static/images/appsmith-introduction-video-tile.png)](https://www.youtube.com/watch?v=jhyDI0e1o08?v=Dxe_NzdGzL4&utm_source=github&utm_medium=organic&utm_campaign=readme/?target=_blank)  
-
+The rest of this doc will still refer to "Appsmith", because that's upstream for us.
 
 ## Installation
 There are two ways to start using Appsmith:
