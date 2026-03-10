@@ -1,4 +1,3 @@
-import React from "react";
 import type {
   AdminConfigType,
   Setting,
@@ -8,7 +7,7 @@ import {
   SettingCategories,
   SettingTypes,
 } from "ee/pages/AdminSettings/config/types";
-import BrandingBadge from "pages/AppViewer/BrandingBadge";
+
 import { selectFeatureFlags } from "ee/selectors/featureFlagsSelectors";
 import store from "store";
 import { isMultiOrgFFEnabled } from "ee/utils/planHelpers";
@@ -33,11 +32,10 @@ export const APPSMITH_HIDE_WATERMARK_SETTING: Setting = {
   name: "hideWatermark",
   category: SettingCategories.GENERAL,
   controlType: SettingTypes.CHECKBOX,
-  label: "Appsmith watermark",
-  text: "Hide Appsmith watermark",
-  isFeatureEnabled: false,
-  isDisabled: () => true,
-  textSuffix: <BrandingBadge />,
+  label: "Watermark",
+  text: "Hide watermark",
+  isFeatureEnabled: true,
+  isDisabled: () => false,
 };
 
 export const config: AdminConfigType = {
@@ -49,7 +47,6 @@ export const config: AdminConfigType = {
   subText: "Set your organisational general settings",
   canSave: true,
   settings: [
-    APPSMITH_DISABLE_TELEMETRY_SETTING,
     APPSMITH_HIDE_WATERMARK_SETTING,
   ],
 } as AdminConfigType;

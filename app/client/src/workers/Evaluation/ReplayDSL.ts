@@ -1,5 +1,5 @@
 import { Doc, Map, UndoManager } from "yjs";
-import { captureException } from "@sentry/react";
+const captureException = (_err: unknown) => {};
 import { diff as deepDiff, applyChange, revertChange } from "deep-diff";
 
 import type { DSLDiff } from "./replayUtils";

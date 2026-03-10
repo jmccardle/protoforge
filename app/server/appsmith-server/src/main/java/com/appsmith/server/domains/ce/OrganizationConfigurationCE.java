@@ -63,6 +63,14 @@ public class OrganizationConfigurationCE implements Serializable {
 
     private Boolean isAtomicPushAllowed = false;
 
+    // Branding configuration
+    private String brandLogoUrl;
+    private String brandFaviconUrl;
+    private Map<String, String> brandColors;
+    private Integer logoWidth;
+    private Integer logoHeight;
+    private Boolean hideWatermark;
+
     public void addThirdPartyAuth(String auth) {
         if (thirdPartyAuths == null) {
             thirdPartyAuths = new ArrayList<>();
@@ -90,6 +98,13 @@ public class OrganizationConfigurationCE implements Serializable {
         migrationStatus = organizationConfiguration.getMigrationStatus();
         isStrongPasswordPolicyEnabled = organizationConfiguration.getIsStrongPasswordPolicyEnabled();
         isAtomicPushAllowed = organizationConfiguration.getIsAtomicPushAllowed();
+
+        brandLogoUrl = ObjectUtils.defaultIfNull(organizationConfiguration.getBrandLogoUrl(), brandLogoUrl);
+        brandFaviconUrl = ObjectUtils.defaultIfNull(organizationConfiguration.getBrandFaviconUrl(), brandFaviconUrl);
+        brandColors = ObjectUtils.defaultIfNull(organizationConfiguration.getBrandColors(), brandColors);
+        logoWidth = ObjectUtils.defaultIfNull(organizationConfiguration.getLogoWidth(), logoWidth);
+        logoHeight = ObjectUtils.defaultIfNull(organizationConfiguration.getLogoHeight(), logoHeight);
+        hideWatermark = ObjectUtils.defaultIfNull(organizationConfiguration.getHideWatermark(), hideWatermark);
     }
 
     protected static <T> T getComputedValue(T defaultValue, T updatedValue, T currentValue) {

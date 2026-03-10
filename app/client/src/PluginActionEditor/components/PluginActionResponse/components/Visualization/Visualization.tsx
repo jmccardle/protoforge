@@ -1,7 +1,6 @@
 import { Button, Flex } from "@appsmith/ads";
-import { ErrorBoundary } from "@sentry/react";
 import { type VisualizationElements } from "entities/Action";
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import { EmptyVisualization } from "./components/EmptyVisualization";
 import { LoadingOverlay } from "./components/LoadingOverlay";
 import { PromptInput } from "./components/PromptInput";
@@ -9,6 +8,20 @@ import { Result } from "./components/Result";
 import { SuggestionButtons } from "./components/SuggestionButtons";
 import { useGenerateVisualization } from "./useGenerateVisualization";
 import { useSaveVisualization } from "./useSaveVisualization";
+
+class ErrorBoundary extends Component<
+  { fallback: React.ReactNode; children: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
+}
 
 interface VisualizationProps {
   entityId: string;

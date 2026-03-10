@@ -36,7 +36,7 @@ function AppViewerPageContainer() {
   const isFetchingPage = useSelector(getIsFetchingPage);
   const currentApplication = useSelector(getCurrentApplication);
 
-  // get appsmith editr link
+  // get protoforge editor link
   const appsmithEditorLink = useMemo(() => {
     if (
       currentApplication?.userPermissions &&
@@ -53,7 +53,7 @@ function AppViewerPageContainer() {
               basePageId: currentBasePageId,
             })}
           >
-            Appsmith Editor
+            Protoforge Editor
           </Link>
         </p>
       );

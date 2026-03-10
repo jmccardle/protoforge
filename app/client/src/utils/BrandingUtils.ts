@@ -15,7 +15,7 @@ import { LightModeTheme } from "@appsmith/wds-theming";
 
 const FAVICON_MAX_WIDTH = 48;
 const FAVICON_MAX_HEIGHT = 48;
-const DEFAULT_BRANDING_PRIMARY_COLOR = "#E15615";
+const DEFAULT_BRANDING_PRIMARY_COLOR = "#2563EB";
 
 export const APPSMITH_BRAND_PRIMARY_COLOR =
   getComputedStyle(document.documentElement).getPropertyValue(
@@ -23,10 +23,10 @@ export const APPSMITH_BRAND_PRIMARY_COLOR =
   ) || DEFAULT_BRANDING_PRIMARY_COLOR;
 export const APPSMITH_BRAND_BG_COLOR = "#F1F5F9";
 export const APPSMITH_BRAND_FAVICON_URL = getAssetUrl(
-  `${ASSETS_CDN_URL}/appsmith-favicon-orange.ico`,
+  `${ASSETS_CDN_URL}/protoforge-favicon.ico`,
 );
 export const APPSMITH_BRAND_LOGO_URL = getAssetUrl(
-  `${ASSETS_CDN_URL}/appsmith-logo-no-margin.png`,
+  `${ASSETS_CDN_URL}/protoforge-logo.png`,
 );
 
 /**
@@ -49,14 +49,14 @@ export function createBrandColorsFromPrimaryColor(
     size: "small",
   });
 
-  // if the brand color is not readable or the color is appsmith orange, use white as the text color
+  // if the brand color is not readable or the color is the default brand color, use white as the text color
   if (isReadable === false || brand === APPSMITH_BRAND_PRIMARY_COLOR) {
     textColor = "#fff";
   }
 
   let bgColor = `#${tinycolor(`hsl ${hue} ${saturation} ${98}}`).toHex()}`;
 
-  // if the primary color is appsmith orange, use gray shade for the bg color
+  // if the primary color is the default brand color, use gray shade for the bg color
   if (brand === APPSMITH_BRAND_PRIMARY_COLOR) {
     bgColor = APPSMITH_BRAND_BG_COLOR;
   }

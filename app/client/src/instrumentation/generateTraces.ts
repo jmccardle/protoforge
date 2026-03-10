@@ -1,115 +1,55 @@
-import type {
-  Span,
-  Attributes,
-  TimeInput,
-  SpanOptions,
-} from "@opentelemetry/api";
-import { SpanKind } from "@opentelemetry/api";
-import { appsmithTelemetry } from "./index";
-import type { WebworkerSpanData } from "./types";
-import { getCommonTelemetryAttributes } from "./utils";
+// No-op stubs: OpenTelemetry instrumentation has been removed.
+import type { Span, Attributes, TimeInput, WebworkerSpanData } from "./types";
 
-const { context, trace } = appsmithTelemetry.getTraceAndContext();
-
-const DEFAULT_TRACE = "default";
+const noopSpan: Span = {
+  end: () => {},
+  setAttributes: () => {},
+};
 
 export function startRootSpan(
-  spanName: string,
-  spanAttributes: Attributes = {},
-  startTime?: TimeInput,
-) {
-  const tracer = trace.getTracer(DEFAULT_TRACE);
-  const commonAttributes = getCommonTelemetryAttributes();
-
-  return tracer.startSpan(spanName, {
-    kind: SpanKind.CLIENT,
-    attributes: {
-      ...commonAttributes,
-      ...spanAttributes,
-    },
-    startTime,
-  });
+  _spanName: string,
+  _spanAttributes: Attributes = {},
+  _startTime?: TimeInput,
+): Span {
+  return noopSpan;
 }
 
-export const generateContext = (span: Span) => {
-  if (!context) {
-    return;
-  }
-
-  return trace?.setSpan(context.active(), span);
+export const generateContext = (_span: Span) => {
+  return undefined;
 };
 
 export function startNestedSpan(
-  spanName: string,
-  parentSpan: Span,
-  spanAttributes: Attributes = {},
-  startTime?: TimeInput,
-) {
-  const parentContext = generateContext(parentSpan);
-
-  const generatorTrace = trace.getTracer(DEFAULT_TRACE);
-  const commonAttributes = getCommonTelemetryAttributes();
-
-  const spanOptions: SpanOptions = {
-    kind: SpanKind.CLIENT,
-    attributes: {
-      ...commonAttributes,
-      ...spanAttributes,
-    },
-    startTime,
-  };
-
-  return generatorTrace?.startSpan(spanName, spanOptions, parentContext);
+  _spanName: string,
+  _parentSpan: Span,
+  _spanAttributes: Attributes = {},
+  _startTime?: TimeInput,
+): Span {
+  return noopSpan;
 }
 
-export function endSpan(span?: Span) {
-  span?.end();
-}
+export function endSpan(_span?: Span) {}
 
 export function setAttributesToSpan(
-  span?: Span,
-  spanAttributes: Attributes = {},
-) {
-  span?.setAttributes(spanAttributes);
-}
+  _span?: Span,
+  _spanAttributes: Attributes = {},
+) {}
 
 export const startAndEndSpanForFn = <T>(
-  spanName: string,
-  spanAttributes: Attributes = {},
+  _spanName: string,
+  _spanAttributes: Attributes = {},
   fn: () => T,
-) => {
-  const span = startRootSpan(spanName, spanAttributes);
-  const res: T = fn();
-
-  span?.end();
-
-  return res;
+): T => {
+  return fn();
 };
 
 export function startAndEndSpan(
-  spanName: string,
-  startTime: number,
-  difference: number,
-  spanAttributes: Attributes = {},
-) {
-  const endTime = startTime + Math.floor(difference);
+  _spanName: string,
+  _startTime: number,
+  _difference: number,
+  _spanAttributes: Attributes = {},
+) {}
 
-  const span = startRootSpan(spanName, spanAttributes, startTime);
-
-  span?.end(endTime);
-}
-
-//convert webworker spans to OTLP spans
 export const convertWebworkerSpansToRegularSpans = (
-  parentSpan: Span,
-  allSpans: Record<string, WebworkerSpanData> = {},
-) => {
-  Object.values(allSpans)
-    .filter(({ endTime, startTime }) => startTime && endTime)
-    .forEach((spanData) => {
-      const { attributes, endTime, spanName, startTime } = spanData;
-      const span = startNestedSpan(spanName, parentSpan, attributes, startTime);
-
-      span?.end(endTime);
-    });
-};
+  _parentSpan: Span,
+  _allSpans: Record<string, WebworkerSpanData> = {},
+) => {};

@@ -1,4 +1,4 @@
-import { uuid4 } from "@sentry/utils";
+const uuid4 = () => crypto.randomUUID();
 import type {
   LogObject,
   Methods,

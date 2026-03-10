@@ -149,13 +149,6 @@ function SetupForm(props: SetupFormProps) {
     anonymousDataInput.name = "allowCollectingAnonymousData";
     anonymousDataInput.style.display = "none";
     form.appendChild(anonymousDataInput);
-    const signupForNewsletter: HTMLInputElement = document.querySelector(
-      `[name="signupForNewsletter"]`,
-    ) as HTMLInputElement;
-
-    if (signupForNewsletter)
-      signupForNewsletter.value = signupForNewsletter.checked.toString();
-
     form.submit();
     //if form is already submitted once do not submit it again
     setIsSubmitted(true);

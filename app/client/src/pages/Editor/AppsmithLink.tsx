@@ -51,7 +51,7 @@ export const AppsmithLink = () => {
     <Tooltip content={createMessage(LOGO_TOOLTIP)} placement="bottomLeft">
       <StyledLink onClick={handleOnClick}>
         <img
-          alt="Appsmith logo"
+          alt="Protoforge logo"
           className="t--appsmith-logo"
           src={
             organizationConfig.brandFaviconUrl &&

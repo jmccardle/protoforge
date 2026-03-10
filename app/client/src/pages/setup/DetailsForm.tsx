@@ -11,16 +11,16 @@ import {
   WELCOME_FORM_VERIFY_PASSWORD,
   CONTINUE,
   ONBOARDING_STATUS_GET_STARTED,
-  PRODUCT_UPDATES_CONFIRMATION_LABEL,
+
   WELCOME_FORM_NON_SUPER_USER_USE_CASE,
   WELCOME_FORM_NON_SUPER_USER_PROFICIENCY_LEVEL,
 } from "ee/constants/messages";
 import FormTextField from "components/utils/ReduxFormTextField";
 import type { FormErrors, InjectedFormProps } from "redux-form";
 import { FormGroup } from "@appsmith/ads-old";
-import { Button, Checkbox } from "@appsmith/ads";
+import { Button } from "@appsmith/ads";
 import { proficiencyOptions, useCaseOptions } from "./constants";
-import { isAirgapped } from "ee/utils/airgapHelpers";
+
 import { setFirstTimeUserOnboardingTelemetryCalloutVisibility } from "utils/storage";
 import RadioButtonGroup from "components/editorComponents/RadioButtonGroup";
 import CsrfTokenInput from "../UserAuth/CsrfTokenInput";
@@ -182,11 +182,6 @@ export default function DetailsForm(
               testid="t--user-use-case"
             />
             <Space style={{ marginBottom: "var(--ads-spaces-3)" }} />
-            {!isAirgapped() && (
-              <Checkbox defaultSelected name="signupForNewsletter" value="true">
-                {createMessage(PRODUCT_UPDATES_CONFIRMATION_LABEL)}
-              </Checkbox>
-            )}
           </div>
         )}
         {props.isFirstPage && (

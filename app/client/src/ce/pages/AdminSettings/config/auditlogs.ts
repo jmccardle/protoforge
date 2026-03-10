@@ -18,6 +18,6 @@ export const config: AdminConfigType = {
   component: AuditLogsUpgradePage,
   title: "Audit logs",
   canSave: false,
-  isFeatureEnabled: false,
-  isEnterprise: isAIAgentInstanceEnabled ? true : false,
+  isFeatureEnabled: true,
+  isEnterprise: false,
 } as AdminConfigType;

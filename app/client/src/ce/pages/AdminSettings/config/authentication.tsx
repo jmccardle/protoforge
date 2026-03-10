@@ -312,6 +312,76 @@ export const SamlAuthCallout: AuthMethodType = {
   isFeatureEnabled: isSAMLEnabled(featureFlags),
 };
 
+export const OidcAuth: AdminConfigType = {
+  type: SettingCategories.OIDC_AUTH,
+  categoryType: CategoryType.USER_MANAGEMENT,
+  controlType: SettingTypes.GROUP,
+  title: "OIDC authentication",
+  subText: createMessage(OIDC_AUTH_DESC),
+  canSave: true,
+  settings: [
+    {
+      id: "APPSMITH_OAUTH2_OIDC_CLIENT_ID",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "Client ID",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_CLIENT_SECRET",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "Client secret",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_AUTH_URL",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "Authorization URL",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_TOKEN_URL",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "Token URL",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_USER_INFO",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "User info URL",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_JWKS_URL",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "JWK set URL",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_OAUTH2_OIDC_REDIRECT_URL",
+      category: SettingCategories.OIDC_AUTH,
+      controlType: SettingTypes.UNEDITABLEFIELD,
+      label: "Redirect URL",
+      fieldName: "oidc-redirect-url-form",
+      value: "/login/oauth2/code/oidc",
+      tooltip:
+        "This URL will be used as the redirect URI when configuring your OIDC provider",
+      helpText: "Paste this URL in your OIDC provider configuration.",
+    },
+  ],
+};
+
 export const OidcAuthCallout: AuthMethodType = {
   id: "APPSMITH_OIDC_AUTH",
   category: SettingCategories.OIDC_AUTH,
@@ -337,6 +407,8 @@ function AuthMain() {
     socialLoginList.includes("google");
   GithubAuth.isConnected = GithubAuthCallout.isConnected =
     socialLoginList.includes("github");
+  OidcAuth.isConnected = OidcAuthCallout.isConnected =
+    socialLoginList.includes("oidc");
 
   return <AuthPage authMethods={AuthMethods} />;
 }
@@ -348,6 +420,6 @@ export const config: AdminConfigType = {
   controlType: SettingTypes.PAGE,
   title: "Authentication",
   canSave: false,
-  children: [FormAuth, GoogleAuth, GithubAuth],
+  children: [FormAuth, GoogleAuth, GithubAuth, OidcAuth],
   component: AuthMain,
 };

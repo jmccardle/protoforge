@@ -1,6 +1,6 @@
 {
-  "short_name": "Appsmith App",
-  "name": "Appsmith Client Web UI",
+  "short_name": "Protoforge",
+  "name": "Protoforge",
   "icons": [
     {
       "src": "static/img/favicon-orange.ico",

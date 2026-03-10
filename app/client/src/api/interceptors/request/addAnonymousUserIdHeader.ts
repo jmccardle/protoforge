@@ -1,5 +1,6 @@
 import type { InternalAxiosRequestConfig } from "axios";
-import type { ID } from "@segment/analytics-next";
+
+type ID = string | null | undefined;
 
 export const addAnonymousUserIdHeader = (
   config: InternalAxiosRequestConfig,

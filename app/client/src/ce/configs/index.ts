@@ -55,34 +55,30 @@ const capitalizeText = (text: string) => {
 export const getConfigsFromEnvVars = (): INJECTED_CONFIGS => {
   return {
     sentry: {
-      dsn: process.env.REACT_APP_SENTRY_DSN || "",
-      release: process.env.REACT_APP_SENTRY_RELEASE || "",
-      environment:
-        process.env.REACT_APP_SENTRY_ENVIRONMENT ||
-        capitalizeText(process.env.NODE_ENV),
+      dsn: "",
+      release: "",
+      environment: "",
     },
     smartLook: {
-      id: process.env.REACT_APP_SMART_LOOK_ID || "",
+      id: "",
     },
     betterbugs: {
-      apiKey: process.env.REACT_APP_BETTERBUGS_API_KEY || "",
+      apiKey: "",
     },
     segment: {
-      apiKey: process.env.REACT_APP_SEGMENT_KEY || "",
-      ceKey: process.env.REACT_APP_SEGMENT_CE_KEY || "",
+      apiKey: "",
+      ceKey: "",
     },
     fusioncharts: {
       licenseKey: process.env.REACT_APP_FUSIONCHARTS_LICENSE_KEY || "",
     },
     mixpanel: {
-      enabled: process.env.REACT_APP_SEGMENT_KEY
-        ? process.env.REACT_APP_SEGMENT_KEY.length > 0
-        : false,
-      apiKey: process.env.REACT_APP_MIXPANEL_KEY || "",
+      enabled: false,
+      apiKey: "",
     },
     observability: {
-      deploymentName: "self-hosted",
-      serviceInstanceId: "appsmith-0",
+      deploymentName: "",
+      serviceInstanceId: "",
       tracingUrl: "",
     },
     logLevel:
@@ -99,7 +95,7 @@ export const getConfigsFromEnvVars = (): INJECTED_CONFIGS => {
       releaseDate: "",
       edition: process.env.REACT_APP_VERSION_EDITION || "",
     },
-    intercomAppID: process.env.REACT_APP_INTERCOM_APP_ID || "",
+    intercomAppID: "",
     mailEnabled: process.env.REACT_APP_MAIL_ENABLED
       ? process.env.REACT_APP_MAIL_ENABLED.length > 0
       : false,
@@ -129,38 +125,15 @@ export const getAppsmithConfigs = (): AppsmithUIConfigs => {
     // This code might be called both from the main thread and a web worker
     typeof window === "undefined" ? undefined : window.APPSMITH_FEATURE_CONFIGS;
   const ENV_CONFIG = getConfigsFromEnvVars();
-  const sentryDSN = getConfig(
-    ENV_CONFIG.sentry.dsn,
-    APPSMITH_FEATURE_CONFIGS?.sentry.dsn,
-  );
-  const sentryRelease = getConfig(
-    ENV_CONFIG.sentry.release,
-    APPSMITH_FEATURE_CONFIGS?.sentry.release,
-  );
-  const sentryENV = getConfig(
-    ENV_CONFIG.sentry.environment,
-    APPSMITH_FEATURE_CONFIGS?.sentry.environment,
-  );
-  const segment = getConfig(
-    ENV_CONFIG.segment.apiKey,
-    APPSMITH_FEATURE_CONFIGS?.segment.apiKey,
-  );
-  const mixpanel = getConfig(
-    ENV_CONFIG.mixpanel.apiKey,
-    APPSMITH_FEATURE_CONFIGS?.mixpanel.apiKey,
-  );
-  const observabilityDeploymentName = getConfig(
-    ENV_CONFIG.observability.deploymentName,
-    APPSMITH_FEATURE_CONFIGS?.observability.deploymentName,
-  );
-  const observabilityServiceInstanceId = getConfig(
-    ENV_CONFIG.observability.serviceInstanceId,
-    APPSMITH_FEATURE_CONFIGS?.observability.serviceInstanceId,
-  );
-  const observabilityFrontendTracingUrl = getConfig(
-    ENV_CONFIG.observability.tracingUrl,
-    APPSMITH_FEATURE_CONFIGS?.observability.tracingUrl,
-  );
+  // Telemetry configs disabled — all set to empty/disabled
+  const sentryDSN = { enabled: false, value: "" };
+  const sentryRelease = { enabled: false, value: "" };
+  const sentryENV = { enabled: false, value: "" };
+  const segment = { enabled: false, value: "" };
+  const mixpanel = { enabled: false, value: "" };
+  const observabilityDeploymentName = { enabled: false, value: "" };
+  const observabilityServiceInstanceId = { enabled: false, value: "" };
+  const observabilityFrontendTracingUrl = { enabled: false, value: "" };
   const fusioncharts = getConfig(
     ENV_CONFIG.fusioncharts.licenseKey,
     APPSMITH_FEATURE_CONFIGS?.fusioncharts.licenseKey,
@@ -171,53 +144,37 @@ export const getAppsmithConfigs = (): AppsmithUIConfigs => {
     APPSMITH_FEATURE_CONFIGS?.googleRecaptchaSiteKey,
   );
 
-  // As the following shows, the config variables can be set using a combination
-  // of env variables and injected configs
-  const smartLook = getConfig(
-    ENV_CONFIG.smartLook.id,
-    APPSMITH_FEATURE_CONFIGS?.smartLook.id,
-  );
-
-  const betterbugs = getConfig(
-    ENV_CONFIG.betterbugs.apiKey,
-    APPSMITH_FEATURE_CONFIGS?.betterbugs?.apiKey,
-  );
-
-  const segmentCEKey = getConfig(
-    ENV_CONFIG.segment.ceKey,
-    APPSMITH_FEATURE_CONFIGS?.segment.ceKey,
-  );
-
-  // We enable segment tracking if either the Cloud API key is set or the self-hosted CE key is set
-  segment.enabled = segment.enabled || segmentCEKey.enabled;
+  const smartLook = { enabled: false, value: "" };
+  const betterbugs = { enabled: false, value: "" };
+  const segmentCEKey = { enabled: false, value: "" };
 
   return {
     sentry: {
-      enabled: sentryDSN.enabled && sentryRelease.enabled && sentryENV.enabled,
-      dsn: sentryDSN.value,
-      release: sentryRelease.value,
-      environment: sentryENV.value,
+      enabled: false,
+      dsn: "",
+      release: "",
+      environment: "",
       normalizeDepth: 3,
-      tracesSampleRate: 0.1,
+      tracesSampleRate: 0,
     },
     smartLook: {
-      enabled: smartLook.enabled,
-      id: smartLook.value,
+      enabled: false,
+      id: "",
     },
     betterbugs: {
-      enabled: betterbugs.enabled,
-      apiKey: betterbugs.value,
+      enabled: false,
+      apiKey: "",
     },
     segment: {
-      enabled: segment.enabled,
-      apiKey: segment.value,
-      ceKey: segmentCEKey.value,
+      enabled: false,
+      apiKey: "",
+      ceKey: "",
     },
     observability: {
-      deploymentName: observabilityDeploymentName.value,
-      serviceInstanceId: observabilityServiceInstanceId.value,
-      serviceName: "appsmith-client",
-      tracingUrl: observabilityFrontendTracingUrl.value,
+      deploymentName: "",
+      serviceInstanceId: "",
+      serviceName: "",
+      tracingUrl: "",
     },
     fusioncharts: {
       enabled: fusioncharts.enabled,
@@ -228,8 +185,8 @@ export const getAppsmithConfigs = (): AppsmithUIConfigs => {
       apiKey: googleRecaptchaSiteKey.value,
     },
     mixpanel: {
-      enabled: segment.enabled && mixpanel.enabled,
-      apiKey: mixpanel.value,
+      enabled: false,
+      apiKey: "",
     },
     cloudHosting:
       ENV_CONFIG.cloudHosting ||
@@ -246,8 +203,7 @@ export const getAppsmithConfigs = (): AppsmithUIConfigs => {
         APPSMITH_FEATURE_CONFIGS?.appVersion?.edition ||
         "",
     },
-    intercomAppID:
-      ENV_CONFIG.intercomAppID || APPSMITH_FEATURE_CONFIGS?.intercomAppID || "",
+    intercomAppID: "",
     mailEnabled:
       ENV_CONFIG.mailEnabled || APPSMITH_FEATURE_CONFIGS?.mailEnabled || false,
     appsmithSupportEmail: ENV_CONFIG.supportEmail,

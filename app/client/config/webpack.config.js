@@ -21,7 +21,7 @@ const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin");
-const FaroSourceMapUploaderPlugin = require("@grafana/faro-webpack-plugin");
+// Telemetry removed: FaroSourceMapUploaderPlugin
 
 const createEnvironmentHash = require("./createEnvironmentHash");
 
@@ -633,17 +633,7 @@ module.exports = function (webpackEnv) {
           threshold: 10240,
           minRatio: 0.8,
         }),
-      process.env.REACT_APP_ENVIRONMENT === "PRODUCTION" &&
-        new FaroSourceMapUploaderPlugin({
-          appId: process.env.REACT_APP_FARO_APP_ID,
-          appName: process.env.REACT_APP_FARO_APP_NAME,
-          endpoint: process.env.REACT_APP_FARO_SOURCEMAP_UPLOAD_ENDPOINT,
-          stackId: process.env.REACT_APP_FARO_STACK_ID,
-          // instructions on how to obtain your API key are in the documentation
-          // https://grafana.com/docs/grafana-cloud/monitor-applications/frontend-observability/sourcemap-upload-plugins/#obtain-an-api-key
-          apiKey: process.env.REACT_APP_FARO_SOURCEMAP_UPLOAD_API_KEY,
-          gzipContents: true,
-        }),
+      // Telemetry removed: FaroSourceMapUploaderPlugin
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

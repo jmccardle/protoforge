@@ -26,7 +26,10 @@ import GlobalStyles from "globalStyles";
 
 import AppErrorBoundary from "./AppErrorBoundry";
 import log from "loglevel";
-import { FaroErrorBoundary } from "@grafana/faro-react";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FaroErrorBoundary = ({ children }: { children: React.ReactNode; [key: string]: any }) => (
+  <>{children}</>
+);
 
 runSagaMiddleware();
 

@@ -12,9 +12,7 @@ import {
 } from "ee/utils";
 
 export const getUpgradeBanner = (isEnabled: boolean) => {
-  if (isEnabled) {
-    return <UpgradeBanner_EE />;
-  } else return <UpgradeBanner_CE />;
+  return null;
 };
 
 export const getHTMLPageTitle = (isEnabled: boolean, instanceName: string) => {

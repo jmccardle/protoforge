@@ -28,7 +28,7 @@ import {
 } from "ee/selectors/applicationSelectors";
 import Debugger from "../DataSourceEditor/Debugger";
 import { isPluginActionCreating } from "PluginActionEditor/store";
-import RequestNewIntegration from "./RequestNewIntegration";
+
 import { StyledDivider } from "./IntegrationStyledComponents";
 import CreateNewDatasourceHeader from "./CreateNewDatasourceHeader";
 import EmptySearchedPlugins from "./EmptySearchedPlugins";
@@ -157,7 +157,7 @@ class CreateNewDatasourceTab extends React.Component<
           )}
           <EmptySearchedPlugins mockDatasources={this.props.mockDatasources} />
         </NewIntegrationsContainer>
-        <RequestNewIntegration />
+
         {showDebugger && <Debugger />}
       </>
     );
