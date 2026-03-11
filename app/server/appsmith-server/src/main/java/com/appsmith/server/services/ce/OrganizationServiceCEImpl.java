@@ -175,6 +175,10 @@ public class OrganizationServiceCEImpl extends BaseService<OrganizationRepositor
                         config.addThirdPartyAuth("github");
                     }
 
+                    if (StringUtils.hasText(System.getenv("APPSMITH_OAUTH2_OIDC_CLIENT_ID"))) {
+                        config.addThirdPartyAuth("oidc");
+                    }
+
                     return configService
                             .getInstanceVariables()
                             .map(instanceVariables -> instanceVariablesHelper.populateOrgConfigWithInstanceVariables(
