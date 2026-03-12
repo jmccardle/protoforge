@@ -2,6 +2,9 @@ package com.appsmith.util;
 
 import com.appsmith.external.exceptions.pluginExceptions.AppsmithPluginError;
 import com.appsmith.external.exceptions.pluginExceptions.AppsmithPluginException;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.resolver.AddressResolver;
 import io.netty.resolver.AddressResolverGroup;
 import io.netty.resolver.InetNameResolver;
@@ -41,6 +44,8 @@ public class WebClientUtils {
     private static final int MAX_IN_MEMORY_SIZE_IN_BYTES = 16 * 1024 * 1024;
 
     private static final InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();
+
+    private static final boolean TRUST_ALL_CERTS = "true".equalsIgnoreCase(System.getenv("APPSMITH_TRUST_ALL_CERTS"));
 
     public static final ExchangeFilterFunction IP_CHECK_FILTER =
             ExchangeFilterFunction.ofRequestProcessor(WebClientUtils::requestFilterFn);
@@ -163,6 +168,18 @@ public class WebClientUtils {
     private static HttpClient makeSafeHttpClient(HttpClient httpClient) {
         if (shouldUseSystemProxy()) {
             httpClient = httpClient.proxyWithSystemProperties();
+        }
+
+        if (TRUST_ALL_CERTS) {
+            log.warn("APPSMITH_TRUST_ALL_CERTS is enabled — TLS certificate verification is disabled");
+            try {
+                SslContext sslContext = SslContextBuilder.forClient()
+                        .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                        .build();
+                httpClient = httpClient.secure(spec -> spec.sslContext(sslContext));
+            } catch (Exception e) {
+                log.error("Failed to configure insecure TLS context", e);
+            }
         }
 
         return httpClient.resolver(ResolverGroup.INSTANCE);
